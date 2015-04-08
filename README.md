@@ -12,3 +12,7 @@ Checklist:
  * [x] Required: persist todo items (remove, edit, add items) and retrieve them properly on app restart
 
 Walkthrough of all user stories:
+
+![Video Walkthrough](anim_simple_todo.gif)
+
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
