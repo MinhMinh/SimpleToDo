@@ -1,22 +1,29 @@
 package com.nutanix.minhdang.simpletodo;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ListView;
 
-import java.util.List;
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainActivity extends Activity {
 
-    private final String TAG = "MainActivity";
-
     TodoItemDatabase db;
-    List<TodoItem> items;
-    //TodoAdapter itemsAdapter;
-    //ListView lvItems;
-    //private final int REQUEST_CODE = 20;
+    ArrayList<TodoItem> items;
+    TodoAdapter itemsAdapter;
+    ListView lvItems;
+    private final int REQUEST_CODE = 20;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +31,6 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         db = new TodoItemDatabase(this);
-        db.addTodoItem(new TodoItem("One", 1));
-        db.addTodoItem(new TodoItem("Two", 2));
-
         items = db.getAllTodoItems();
 
         for (TodoItem ti : items) {
@@ -36,13 +40,10 @@ public class MainActivity extends Activity {
             Log.d("Name: ", log);
         }
 
-        /*
         lvItems = (ListView) findViewById(R.id.lvItems);
-        readItems();
         itemsAdapter = new TodoAdapter(this, items);
         lvItems.setAdapter(itemsAdapter);
         setupListViewListener();
-        */
     }
 
     @Override
@@ -67,7 +68,6 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    /*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
@@ -76,7 +76,6 @@ public class MainActivity extends Activity {
             items.remove(pos);
             items.add(pos, new TodoItem(item_name, 1));
             itemsAdapter.notifyDataSetChanged();
-            writeItems();
         }
     }
 
@@ -116,19 +115,4 @@ public class MainActivity extends Activity {
         );
     }
 
-    private void readItems() {
-        Log.d(TAG, "readItems");
-        items = new ArrayList<TodoItem>(db.getAllTodoItems());
-    }
-
-    private void writeItems() {
-        File filesDir = getFilesDir();
-        File todoFile = new File(filesDir, "todo.txt");
-        try {
-            FileUtils.writeLines(todoFile, items);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    */
 }
